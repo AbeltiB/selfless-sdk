@@ -129,14 +129,14 @@ export type SocketEventName = typeof SOCKET_EVENTS[keyof typeof SOCKET_EVENTS];
 
 // BullMQ queue names
 export const QUEUE_NAMES = {
-  NOTIFICATION_EMAIL: 'notification:email',
-  NOTIFICATION_SMS: 'notification:sms',
-  NOTIFICATION_PUSH: 'notification:push',
-  NOTIFICATION_WHATSAPP: 'notification:whatsapp',
-  TICKET_EXPIRY: 'ticket:expiry',
-  ANALYTICS_AGGREGATE: 'analytics:aggregate',
-  TENANT_PROVISION: 'tenant:provision',
-  INTEGRATION_WEBHOOK: 'integration:webhook',
+  NOTIFICATION_EMAIL: 'notification-email',
+  NOTIFICATION_SMS: 'notification-sms',
+  NOTIFICATION_PUSH: 'notification-push',
+  NOTIFICATION_WHATSAPP: 'notification-whatsapp',
+  TICKET_EXPIRY: 'ticket-expiry',
+  ANALYTICS_AGGREGATE: 'analytics-aggregate',
+  TENANT_PROVISION: 'tenant-provision',
+  INTEGRATION_WEBHOOK: 'integration-webhook',
 } as const;
 
 export type QueueName = typeof QUEUE_NAMES[keyof typeof QUEUE_NAMES];
