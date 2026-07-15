@@ -4,7 +4,19 @@ export enum UserRole {
   BRANCH_MANAGER = 'BRANCH_MANAGER',
   SUPERVISOR = 'SUPERVISOR',
   OFFICER = 'OFFICER',
-  CUSTOMER = 'CUSTOMER',
+}
+
+export enum AccountStatus {
+  ACTIVE = 'ACTIVE',
+  SUSPENDED = 'SUSPENDED',
+  DEACTIVATED = 'DEACTIVATED',
+}
+
+export enum OtpPurpose {
+  SIGNUP = 'SIGNUP',
+  LOGIN = 'LOGIN',
+  PIN_RESET = 'PIN_RESET',
+  DEVICE_TRUST = 'DEVICE_TRUST',
 }
 
 export enum OrgStatus {

@@ -8,6 +8,8 @@ import type {
   StepType,
   OrgStatus,
   BranchStatus,
+  AccountStatus,
+  OtpPurpose,
 } from '../constants/enums';
 
 // ─── Common ───────────────────────────────────────────────────────────────────
@@ -35,31 +37,35 @@ export interface ApiError {
 
 // ─── Auth ─────────────────────────────────────────────────────────────────────
 
-export interface JwtStaffPayload {
+export interface JwtAccountPayload {
   sub: string;
-  email: string;
-  role: UserRole;
-  organizationId?: string;
-  branchId?: string;
-  type: 'staff';
+  phone: string;
+  activeOrgId?: string;
+  activeBranchId?: string;
+  activeRole?: UserRole;
+  deviceId?: string;
+  type: 'account';
   iat?: number;
   exp?: number;
 }
 
-export interface JwtCustomerPayload {
-  sub: string;
-  telegramId: string;
-  organizationId?: string;
-  type: 'customer';
-  iat?: number;
-  exp?: number;
-}
-
-export type JwtPayload = JwtStaffPayload | JwtCustomerPayload;
+/** @deprecated kept as an alias during the auth rewrite; use JwtAccountPayload */
+export type JwtPayload = JwtAccountPayload;
 
 export interface AuthTokens {
   accessToken: string;
   refreshToken: string;
+}
+
+export interface RequestOtpPayload {
+  phone: string;
+  purpose: OtpPurpose;
+}
+
+export interface VerifyOtpPayload {
+  phone: string;
+  purpose: OtpPurpose;
+  code: string;
 }
 
 // ─── Organization ─────────────────────────────────────────────────────────────
@@ -166,20 +172,44 @@ export interface Service {
   updatedAt: Date;
 }
 
-// ─── Customer ─────────────────────────────────────────────────────────────────
+// ─── Account (unified identity) ────────────────────────────────────────────────
 
-export interface Customer {
+export interface OrgMembership {
   id: string;
-  telegramId?: string;
-  telegramUsername?: string;
-  phone?: string;
-  email?: string;
-  firstName: string;
-  lastName?: string;
-  profileComplete: boolean;
+  accountId: string;
+  organizationId: string;
+  branchId?: string;
+  role: UserRole;
+  isActive: boolean;
+  invitedAt?: Date;
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface Account {
+  id: string;
+  phone: string;
+  firstName: string;
+  lastName?: string;
+  email?: string;
+  telegramId?: string;
+  telegramUsername?: string;
+  photoUrl?: string;
+  addressLine1?: string;
+  addressLine2?: string;
+  city?: string;
+  region?: string;
+  country?: string;
+  dateOfBirth?: Date;
+  status: AccountStatus;
+  lastLoginAt?: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  memberships?: OrgMembership[];
+}
+
+/** @deprecated use Account — kept as an alias during the auth rewrite */
+export type Customer = Account;
 
 // ─── Queue ────────────────────────────────────────────────────────────────────
 
@@ -256,18 +286,19 @@ export interface FormFieldCondition {
   value: unknown;
 }
 
-export interface User {
+/** @deprecated use Account — kept as an alias during the auth rewrite */
+export type User = Account;
+
+// ─── Priority / fairness flags ─────────────────────────────────────────────────
+
+export interface PriorityFlag {
   id: string;
-  organizationId?: string;
-  branchId?: string;
-  email?: string;
-  telegramId?: string;
-  firstName?: string;
-  lastName?: string;
-  name?: string;
-  role: UserRole;
+  organizationId: string;
+  name: string;
+  description?: string;
+  weight: number;
+  color?: string;
   isActive: boolean;
-  lastLoginAt?: Date;
   createdAt: Date;
   updatedAt: Date;
 }
