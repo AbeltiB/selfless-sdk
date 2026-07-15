@@ -1,6 +1,6 @@
 {
   "name": "selfless-sdk",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "publishConfig": {"access": "public"},
   "description": "SelfLess Platform shared SDK — types, events, validators, utils",
   "main": "./dist/index.js",
